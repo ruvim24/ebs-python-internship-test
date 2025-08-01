@@ -9,8 +9,14 @@ class Category(models.Model):
 
 
 class Blog(models.Model):
+    enabled = models.BooleanField(default=True)
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True)
     body = models.TextField()
     posted = models.DateField(db_index=True, auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+    text = models.TextField(max_length=500)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
